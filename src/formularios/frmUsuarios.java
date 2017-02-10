@@ -5,15 +5,24 @@
  */
 package formularios;
 
+import clases.Datos;
+import clases.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author marco
  */
 public class frmUsuarios extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmUsuarios
-     */
+     private Datos misDatos;
+     private int usuarioActual=0;
+     private boolean nuevo=false;
+      
+      public void setDatos(Datos misDatos){
+          this.misDatos= misDatos;
+      }
+    
     public frmUsuarios() {
         initComponents();
     }
@@ -38,7 +47,7 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         txtConfirmarClave = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         cmbPerfil = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        txtPerfil = new javax.swing.JLabel();
         btnPrimero = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
@@ -48,12 +57,30 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         btnCrear = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Usuarios");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jLabel1.setText("ID Usuario");
 
@@ -94,8 +121,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setText("Confirmacion");
-        jLabel6.setEnabled(false);
+        txtPerfil.setText("Perfil");
+        txtPerfil.setEnabled(false);
 
         btnPrimero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/primero.png"))); // NOI18N
         btnPrimero.setToolTipText("Ir al Primero");
@@ -170,6 +197,15 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btnCancelar.setToolTipText("Cancelar operacion");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,7 +213,6 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -190,22 +225,22 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel3))
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(47, 47, 47)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtIDUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(31, 31, 31)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtConfirmarClave, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtConfirmarClave))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtIDUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(132, 132, 132)
+                                .addComponent(txtPerfil)
+                                .addGap(42, 42, 42)
+                                .addComponent(cmbPerfil, 0, 200, Short.MAX_VALUE))
+                            .addComponent(txtApellido)
+                            .addComponent(txtNombre)))
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(btnPrimero)
@@ -215,12 +250,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                         .addComponent(btnSiguiente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnUltimo)
-                        .addGap(63, 63, 63)
+                        .addGap(41, 41, 41)
                         .addComponent(btnCrear)
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnGuardar)
+                        .addGap(5, 5, 5)
+                        .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBorrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,14 +267,14 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIDUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(txtPerfil))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,8 +304,8 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnGuardar)
                     .addComponent(btnBorrar)
-                    .addComponent(btnBuscar))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addComponent(btnBuscar)
+                    .addComponent(btnCancelar)))
         );
 
         pack();
@@ -287,46 +324,266 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtClaveActionPerformed
 
     private void btnPrimeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeroActionPerformed
-        // TODO add your handling code here:
+        usuarioActual=0;
+        mostrarRegisto();
     }//GEN-LAST:event_btnPrimeroActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-        // TODO add your handling code here:
+        usuarioActual--;
+        if(usuarioActual==-1){
+            usuarioActual=misDatos.numeroUsuarios()-1;
+        }
+      mostrarRegisto();
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
+        usuarioActual++;
+        if(usuarioActual== misDatos.numeroUsuarios()){
+           usuarioActual=0;
+        }
+        mostrarRegisto();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoActionPerformed
-        // TODO add your handling code here:
+        usuarioActual= misDatos.numeroUsuarios()-1;
+        mostrarRegisto();
     }//GEN-LAST:event_btnUltimoActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        int respuesta=JOptionPane.showConfirmDialog(rootPane, "Estas seguro de borrar el registro?");
+        
+        if(respuesta!=0){
+            return;
+        }
+     
+                     
+         String mensaje;
+
+             mensaje=misDatos.borrarUsuario(usuarioActual);
+             JOptionPane.showMessageDialog(rootPane, mensaje);
+
+        usuarioActual=0;
+        mostrarRegisto();
+        
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+       
+        if(txtIDUsuario.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un ID");
+            txtIDUsuario.requestFocusInWindow();
+            return;
+            
+        }
+        
+          if(cmbPerfil.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un perfil");
+            cmbPerfil.requestFocusInWindow();
+            return;
+        }
+          
+          
+            if(txtNombre.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un nombre");
+            txtNombre.requestFocusInWindow();
+            return;
+        }
+            
+            
+              if(txtApellido.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un apellido");
+            txtApellido.requestFocusInWindow();
+            return;
+        }
+        
+              
+              String clave= new String(txtClave.getPassword());
+              String confirmacion= new String(txtConfirmarClave.getPassword());
+              
+         if(clave.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar clave");
+            txtClave.setText("");
+            txtConfirmarClave.setText("");
+            txtClave.requestFocusInWindow();
+            return;
+        }
+         
+         if(confirmacion.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Debe confirmar la clave");
+            txtConfirmarClave.requestFocusInWindow();
+            return;
+        }
+         
+            if(!clave.equals(confirmacion)){
+            JOptionPane.showMessageDialog(rootPane, "La confirmacion de la clave debe ser igual a la clave");
+            txtClave.requestFocusInWindow();
+            return;
+        }
+            
+            
+         //verificar si el usuario existe o no
+         int pos=misDatos.posicionUsuario(txtIDUsuario.getText());
+         
+         if(nuevo){
+             if(pos!=-1){
+                JOptionPane.showMessageDialog(rootPane, "Usuario Existente");
+                txtIDUsuario.requestFocusInWindow();
+                return;
+             }
+         }
+         else{
+               if(pos==-1){
+                JOptionPane.showMessageDialog(rootPane, "Usuario no existe");
+                txtIDUsuario.requestFocusInWindow();
+                return;
+             }
+         }
+        
+         Usuario miUsuario= new Usuario(txtIDUsuario.getText(), txtNombre.getText(), txtApellido.getText(), clave, cmbPerfil.getSelectedIndex());
+         
+         
+         String mensaje;
+         
+         if(nuevo){
+             mensaje=misDatos.agregarUsuario(miUsuario);
+         }
+         else{
+             mensaje=misDatos.modificaUsuario(miUsuario, pos);
+         }
+         
+         JOptionPane.showMessageDialog(rootPane, mensaje);
+         
+        btnPrimero.setEnabled(true);
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(true);
+        btnUltimo.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        btnBorrar.setEnabled(true);
+        btnCrear.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        
+        
+        txtIDUsuario.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtApellido.setEnabled(false);
+        txtClave.setEnabled(false);
+        txtConfirmarClave.setEnabled(false);
+        cmbPerfil.setEnabled(false);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        // TODO add your handling code here:
+        
+        //habilita los botones
+        btnPrimero.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(false);
+        btnUltimo.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+        btnCrear.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        
+        //habilita los campos
+        txtIDUsuario.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtApellido.setEnabled(true);
+        txtClave.setEnabled(true);
+        txtConfirmarClave.setEnabled(true);
+        cmbPerfil.setEnabled(true);
+        
+        
+        //limpia los campos
+        txtIDUsuario.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtClave.setText("");
+        txtConfirmarClave.setText("");
+        cmbPerfil.setSelectedIndex(0);
+        
+        //bandera de nuevo activada
+        nuevo=true;
+        
+        txtIDUsuario.requestFocusInWindow();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+         //habilita los botones
+        btnPrimero.setEnabled(false);
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(false);
+        btnUltimo.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnBuscar.setEnabled(false);
+        btnBorrar.setEnabled(false);
+        btnCrear.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        
+        //habilita los campos
+
+        txtNombre.setEnabled(true);
+        txtApellido.setEnabled(true);
+        txtClave.setEnabled(true);
+        txtConfirmarClave.setEnabled(true);
+        cmbPerfil.setEnabled(true);
+ 
+         //desactivamos la bandera de nuevo usuario
+         nuevo=false;
+        
+        txtNombre.requestFocusInWindow();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+         btnPrimero.setEnabled(true);
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(true);
+        btnUltimo.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnBuscar.setEnabled(true);
+        btnBorrar.setEnabled(true);
+        btnCrear.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        
+           txtIDUsuario.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtApellido.setEnabled(false);
+        txtClave.setEnabled(false);
+        txtConfirmarClave.setEnabled(false);
+        cmbPerfil.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+       mostrarRegisto();
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    
+    public void mostrarRegisto(){
+         txtIDUsuario.setText(misDatos.getUsuarios()[usuarioActual].getIdUsuario());
+        txtNombre.setText(misDatos.getUsuarios()[usuarioActual].getNombre());
+        txtApellido.setText(misDatos.getUsuarios()[usuarioActual].getApellido());
+        txtClave.setText(misDatos.getUsuarios()[usuarioActual].getClave());
+        txtConfirmarClave.setText(misDatos.getUsuarios()[usuarioActual].getClave());
+        cmbPerfil.setSelectedIndex(misDatos.getUsuarios()[usuarioActual].getPerfil());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
@@ -339,11 +596,11 @@ public class frmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JPasswordField txtClave;
     private javax.swing.JPasswordField txtConfirmarClave;
     private javax.swing.JTextField txtIDUsuario;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JLabel txtPerfil;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,9 +16,12 @@ import javax.swing.JOptionPane;
  */
 public class frmLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmLogin
-     */
+      private Datos misDatos;
+
+      
+      public void setDatos(Datos misDatos){
+          this.misDatos= misDatos;
+      }
     public frmLogin() {
         initComponents();
     }
@@ -139,7 +142,7 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtClaveActionPerformed
 
     private void btbAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btbAceptarActionPerformed
-        Datos misDatos= new Datos();
+        
         
         if(!misDatos.validarUsuario(txtUsuario.getText(),new String( txtClave.getPassword()))){
             JOptionPane.showMessageDialog(rootPane, "Usuario o clave incorrecto");
@@ -152,6 +155,7 @@ public class frmLogin extends javax.swing.JFrame {
         
         frmPrincipal miPrincipal= new frmPrincipal();
         this.setVisible(false);
+        miPrincipal.setDatos(misDatos);
         miPrincipal.setVisible(true);
         miPrincipal.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_btbAceptarActionPerformed
